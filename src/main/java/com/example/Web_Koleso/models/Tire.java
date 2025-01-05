@@ -26,5 +26,5 @@ public class Tire {
     private String name;
 
     @OneToMany(mappedBy = "tire",orphanRemoval = true)
-    private Set<WarehouseTire> warehouseTire;
+    private List<WarehouseTire> warehouseTire;
 }

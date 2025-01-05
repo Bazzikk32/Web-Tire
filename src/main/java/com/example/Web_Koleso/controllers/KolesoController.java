@@ -1,6 +1,7 @@
 package com.example.Web_Koleso.controllers;
 
 import com.example.Web_Koleso.dto.TireWarehouseDTO;
+import com.example.Web_Koleso.models.Tire;
 import com.example.Web_Koleso.servises.TireService;
 import com.example.Web_Koleso.servises.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,15 @@ public class KolesoController {
         model.addAttribute("tireWarehouseDTOList", tireWarehouseDTOList);
 
         return "article-submit";
+    }
+    @PostMapping("/submit-warehouse")
+    public String handleWarehouseRequest(@RequestParam("name") String warehouse, Model model) {
+        // Добавьте логику для обработки склада
+        model.addAttribute("warehouse", warehouse);
+
+        // Получите список складов и добавьте его в модель
+        List<Tire> tireList=warehouseService.findWarehouseByNameListTier(warehouse);
+        model.addAttribute("tire", tireList);
+        return "warehouse-submit"; // Убедитесь, что это название шаблона верно
     }
 }

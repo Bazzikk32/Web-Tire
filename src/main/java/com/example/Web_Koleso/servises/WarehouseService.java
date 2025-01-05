@@ -1,6 +1,8 @@
 package com.example.Web_Koleso.servises;
 
+import com.example.Web_Koleso.models.Tire;
 import com.example.Web_Koleso.models.Warehouse;
+import com.example.Web_Koleso.models.WarehouseTire;
 import com.example.Web_Koleso.repositories.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,7 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,4 +33,17 @@ public class WarehouseService {
         return warehouseRepository.save(newWarehouse);
     }
     public List<Warehouse> findAllWarehouses() {return warehouseRepository.findAll();}
+
+    public List<Tire> findWarehouseByNameListTier(String name) {
+        Warehouse warehouse = warehouseRepository.findByName(name);
+        if (warehouse == null) {
+            return List.of(); // Или выбросить исключение
+        }
+        List<WarehouseTire> tireList=warehouse.getWarehouseTire();
+        List<Tire> tires=new ArrayList<>();
+        for (WarehouseTire warehouseTire : tireList) {
+            tires.add(warehouseTire.getTire());
+        }
+        return tires;
+    }
 }

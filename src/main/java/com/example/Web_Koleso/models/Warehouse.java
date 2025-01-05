@@ -23,7 +23,7 @@ public class Warehouse {
     private String name;
 
     @OneToMany(mappedBy = "warehouse",orphanRemoval = true)
-    private Set<WarehouseTire> warehouseTire;
+    private List<WarehouseTire> warehouseTire;
 
 
 }
