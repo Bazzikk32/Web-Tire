@@ -26,6 +26,12 @@ public class WarehouseService {
     @Query("DELETE FROM Warehouse ") // Используйте JPQL
     public void deleteAll(){warehouseRepository.deleteAll();}
 
+    /**
+     * Сохраняет новый склад в базу данных.
+     *
+     * @param name Наименование склада.
+     * @return Сохраненный склад.
+     */
     @Transactional
     public Warehouse save(String name) {
         Warehouse newWarehouse = new Warehouse();
@@ -34,6 +40,12 @@ public class WarehouseService {
     }
     public List<Warehouse> findAllWarehouses() {return warehouseRepository.findAll();}
 
+    /**
+     * Находит шины по имени склада.
+     *
+     * @param name Наименование склада.
+     * @return Список шин, связанных с указанным складом. Возвращает пустой список если склад не найден.
+     */
     public List<Tire> findWarehouseByNameListTier(String name) {
         Warehouse warehouse = warehouseRepository.findByName(name);
         if (warehouse == null) {

@@ -90,6 +90,8 @@
             <th>Дефицит всего</th>
             <th>К всего</th>
             <th>Излишек всего</th>
+            <th>Дата</th>
+
         </tr>
         </thead>
         <tbody>
@@ -101,7 +103,10 @@
             <td th:text="${article.getDeficitTotal()}"></td>
             <td th:text="${article.getProvidedTotal()}"></td>
             <td th:text="${article.getSurplusTotal()}"></td>
+            <td th:text="${#temporals.format(article.getUploadDate(), 'yyyy-MM-dd HH:mm:ss')}" data-label="Дата"></td>
+
         </tr>
+
         </tbody>
     </table>
 

@@ -96,6 +96,8 @@
         <th>ID</th>
         <th>Артикул</th>
         <th>Название</th>
+        <th>Дата</th>
+
     </tr>
     </thead>
     <tbody>
@@ -103,6 +105,8 @@
         <td th:text="${tire.id}" data-label="ID"></td>
         <td th:text="${tire.article}" data-label="Артикул"></td>
         <td th:text="${tire.name}" data-label="Название"></td>
+        <td th:text="${#temporals.format(tire.getUploadDate(), 'yyyy-MM-dd HH:mm:ss')}" data-label="Дата"></td>
+
     </tr>
     </tbody>
 </table>

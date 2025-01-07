@@ -2,6 +2,8 @@ package com.example.Web_Koleso.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class TireWarehouseDTO {
     private long tireId;
@@ -12,4 +14,5 @@ public class TireWarehouseDTO {
     private int providedTotal;
     private int deficitTotal;
     private int surplusTotal;
+    private LocalDateTime uploadDate;
 }

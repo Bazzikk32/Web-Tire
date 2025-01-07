@@ -15,6 +15,13 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Component для парсинга Excel-файлов, содержащих данные о шинах и складах.
+ * <p>
+ *     Отвечает за чтение данных из файла Excel, создание/обновление записей в базе данных
+ *     и связывание шин со складами.
+ * </p>
+ */
 @Component
 public class KolesoParser {
     private final WarehouseService warehouseService;
@@ -27,6 +34,12 @@ public class KolesoParser {
         this.tireService = tireService;
     }
 
+    /**
+     * Парсит Excel-файл, извлекая данные о складах, шинах и их связях.
+     *
+     * @param filePath Поток ввода, представляющий загруженный Excel-файл.
+     * @throws IOException Если возникает ошибка при чтении файла.
+     */
     public void parseExcelFile(InputStream filePath) throws IOException {
         warehouseTireService.deleteAll();
         tireService.deleteAll();
@@ -61,15 +74,17 @@ public class KolesoParser {
                         WarehouseTire warehouseTire = new WarehouseTire();
                         warehouseTire.setTire(tire);
                         warehouseTire.setWarehouse(warehouse);
-                        int availableNow = 0;
+
+
+                        int availableNow = 0; // Доступно сейчас
                         try {
                             availableNow = (int) row.getCell(6).getNumericCellValue();
-                        } catch (Exception e) {
+                        } catch (Exception e) {   // Обработка ошибки, если ячейка не содержит число.
                         }
                         warehouseTire.setAvailableNow(availableNow);
                         warehouseTireService.save(warehouseTire);
 
-                        int expectedFuture = 0;
+                        int expectedFuture = 0;  //Ожидается поступление
                         try {
                             expectedFuture = (int) row.getCell(8).getNumericCellValue();
                         } catch (Exception e) {
@@ -77,7 +92,7 @@ public class KolesoParser {
                         warehouseTire.setExpectedFuture(expectedFuture);
                         warehouseTireService.save(warehouseTire);
 
-                        int reservedFuture = 0;
+                        int reservedFuture = 0;  //Зарезервировано
                         try {
                             reservedFuture = (int) row.getCell(9).getNumericCellValue();
                         } catch (Exception e) {
@@ -85,7 +100,7 @@ public class KolesoParser {
                         warehouseTire.setReservedFuture(reservedFuture);
                         warehouseTireService.save(warehouseTire);
 
-                        int availableFuture = 0;
+                        int availableFuture = 0;  //Доступно в будущем
                         try {
                             availableFuture = (int) row.getCell(10).getNumericCellValue();
                         } catch (Exception e) {
@@ -93,7 +108,7 @@ public class KolesoParser {
                         warehouseTire.setAvailableFuture(availableFuture);
                         warehouseTireService.save(warehouseTire);
 
-                        int availableTotal = 0;
+                        int availableTotal = 0;  //Доступно всего
                         try {
                             availableTotal = (int) row.getCell(11).getNumericCellValue();
                         } catch (Exception e) {
@@ -101,7 +116,7 @@ public class KolesoParser {
                         warehouseTire.setAvailableTotal(availableTotal);
                         warehouseTireService.save(warehouseTire);
 
-                        int providedTotal = 0;
+                        int providedTotal = 0;  //Поступило всего
                         try {
                             providedTotal = (int) row.getCell(12).getNumericCellValue();
                         } catch (Exception e) {
@@ -109,7 +124,7 @@ public class KolesoParser {
                         warehouseTire.setProvidedTotal(providedTotal);
                         warehouseTireService.save(warehouseTire);
 
-                        int deficitTotal = 0;
+                        int deficitTotal = 0;  //Дефицит всего
                         try {
                             deficitTotal = (int) row.getCell(13).getNumericCellValue();
                         } catch (Exception e) {
@@ -117,7 +132,7 @@ public class KolesoParser {
                         warehouseTire.setDeficitTotal(deficitTotal);
                         warehouseTireService.save(warehouseTire);
 
-                        int surplusTotal = 0;
+                        int surplusTotal = 0;  //Избыток всего
                         try {
                             surplusTotal = (int) row.getCell(14).getNumericCellValue();
                         } catch (Exception e) {
